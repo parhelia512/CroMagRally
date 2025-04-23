@@ -75,12 +75,6 @@ jobs:
       - run: python3 build.py --configure
       - run: python3 build.py --build
       - run: python3 build.py --package
-      - name: Notarize
-        run: |
-          xcrun notarytool store-credentials GameNotarizationProfile --apple-id ${{ secrets.APPLE_NOTARIZATION_USERNAME }} --password ${{ secrets.APPLE_NOTARIZATION_PASSWORD }} --team-id ${{ secrets.APPLE_DEVELOPMENT_TEAM }}
-          xcrun notarytool submit "dist/$ARTIFACT_NAME" --keychain-profile GameNotarizationProfile --wait
-      - name: Staple
-        run: xcrun stapler staple "dist/$ARTIFACT_NAME"
       - uses: actions/upload-artifact@v4
         with:
           name: ${{env.ARTIFACT_NAME}}
